@@ -79,7 +79,7 @@ class _AbstractUserge(Methods, RawClient):
     async def _load_plugins(self) -> None:
         _IMPORTED.clear()
         _INIT_TASKS.clear()
-        logbot.edit_last_msg("Importing All Plugins", _LOG.info, _LOG_STR)
+        logbot.edit_last_msg("Importing All Plug-ins", _LOG.info, _LOG_STR)
         for name in get_all_plugins():
             try:
                 await self.load_plugin(name)
@@ -93,7 +93,7 @@ class _AbstractUserge(Methods, RawClient):
         """ Reload all Plugins """
         self.manager.clear_plugins()
         reloaded: List[str] = []
-        _LOG.info(_LOG_STR, "Reloading All Plugins")
+        _LOG.info(_LOG_STR, "Reloading All Plug-ins")
         for imported in _IMPORTED:
             try:
                 reloaded_ = importlib.reload(imported)
@@ -109,7 +109,7 @@ class _AbstractUserge(Methods, RawClient):
 class UsergeBot(_AbstractUserge):
     """ USERGE-X Bot """
     def __init__(self, **kwargs) -> None:
-        _LOG.info(_LOG_STR, "Setting X-BOT Configs")
+        _LOG.info(_LOG_STR, "Setting BOT Configs")
         super().__init__(session_name=":memory:", **kwargs)
 
     @property
@@ -124,7 +124,7 @@ class Userge(_AbstractUserge):
     has_bot = bool(Config.BOT_TOKEN)
 
     def __init__(self, **kwargs) -> None:
-        _LOG.info(_LOG_STR, "Setting USERGE-X Configs")
+        _LOG.info(_LOG_STR, "Setting USERBOT Configs")
         kwargs = {
             'api_id': Config.API_ID,
             'api_hash': Config.API_HASH,
@@ -151,19 +151,19 @@ class Userge(_AbstractUserge):
 
     async def start(self) -> None:
         """ start client and bot """
-        _LOG.info(_LOG_STR, "Starting USERGE-X")
+        _LOG.info(_LOG_STR, "Starting USERBOT 🤍")
         await super().start()
         if self._bot is not None:
-            _LOG.info(_LOG_STR, "Starting X-Bot")
+            _LOG.info(_LOG_STR, "Starting USER-Bot🌠")
             await self._bot.start()
         await self._load_plugins()
 
     async def stop(self) -> None:  # pylint: disable=arguments-differ
         """ stop client and bot """
         if self._bot is not None:
-            _LOG.info(_LOG_STR, "Stopping X-Bot")
+            _LOG.info(_LOG_STR, "Stopping USER-Bot 💤")
             await self._bot.stop()
-        _LOG.info(_LOG_STR, "Stopping USERGE-X")
+        _LOG.info(_LOG_STR, "Stopping USER-X🔧")
         await super().stop()
         _close_db()
         pool._stop()  # pylint: disable=protected-access
